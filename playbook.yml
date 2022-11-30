@@ -4,10 +4,10 @@
     - name: install nginx
       apt: name=nginx update_cache=yes
     - name: copy nginx config file
-      copy: src=/root/exam-loktev/nginx.conf dest=/etc/nginx/sites-available/default
+      copy: src=/var/exam/exam-loktev/nginx.conf dest=/etc/nginx/sites-available/default
     - name: enable configuration
       file: dest=/etc/nginx/sites-enabled/default src=/etc/nginx/sites-available/default state=link
     - name: copy index.html
-      template: src=/root/exam-loktev/site/index.html dest=/usr/share/nginx/html/index.html mode=0666
+      template: src=/var/exam/exam-loktev/site/index.html dest=/usr/share/nginx/html/index.html mode=0666
     - name: restart nginx
       service: name=nginx state=restarted
