@@ -1,6 +1,5 @@
 cd".."
 cd "/var/exam"
-rm -Rf exam-loktev
 git clone git@github.com:LoktevaO/exam-loktev.git
 touch /var/exam/exam-loktev/hosts
 cd ".."
