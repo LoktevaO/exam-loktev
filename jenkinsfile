@@ -1,0 +1,86 @@
+pipeline {
+  agent any 
+  options {
+  // This is required if you want to clean before build
+   skipDefaultCheckout(true)
+  } 
+
+  stages {
+
+    stage('Stage 1. Cloning branch devops') {
+      steps {
+      cleanWs() // Clean before build
+      sh "echo '******************start cloning branch dev from git********************'"
+      sh "rm -Rf /var/lib/jenkins/workspace/exam-loktev/code"
+      sh "git clone https://github.com/LoktevaO/exam-loktev.git /var/lib/jenkins/workspace/exam-loktev/code/ -b script-jen"
+      sh "echo 'echo ******************end cloning branch dev from git********************'"
+    }
+  }
+
+
+    stage('Stage 2. Cloning branch main') {
+      steps {
+      //cleanWs() // Clean before build
+      sh "echo '******************start cloning branch main from git********************'"
+      sh "git clone https://gitlab.com/staskuznetsov/site.git /var/lib/jenkins/workspace/exam-loktev/site -b main"
+      sh "echo 'echo ******************end cloning branch main from git********************'"
+    }
+  }
+    stage('Stage 3. deploying branch master to prod1 40.113.116.5') {
+      steps {
+      //cleanWs() // Clean before build
+      sh "echo '******************start deploying branch master to prod1 40.113.116.5 ********************'"
+      sh "touch /var/lib/jenkins/workspace/exam-loktev/code/hosts"
+      sh "echo 40.113.116.5 > /var/lib/jenkins/workspace/exam-loktev/code/hosts"
+      sh "ansible-playbook /var/lib/jenkins/workspace/exam-loktev/code/playbook.yml -u root --key-file=/key/id_rsa -i /var/lib/jenkins/workspace/dz8/code/hosts"
+      sh "echo 'echo ******************end deploying branch master to prod1 40.113.116.5********************'"
+    }
+  }
+  
+      stage('Stage 4. Cloning branch dev') {
+      steps {
+      //cleanWs() // Clean before build
+      sh "echo '******************start cloning branch dev from git********************'"
+      sh "rm -Rf /var/lib/jenkins/workspace/exam-loktev/site"
+      sh "git clone https://gitlab.com/staskuznetsov/site.git /var/lib/jenkins/workspace/exam-loktev/site -b dev"
+      sh "echo 'echo ******************end cloning branch dev from git********************'"
+    }
+  }
+  
+    stage('Stage 5. deploying branch dev to prod2 13.80.138.171') {
+      steps {
+      //cleanWs() // Clean before build
+      sh "echo '******************start deploying branch dev to prod2 13.80.138.171 ********************'"
+      sh "touch /var/lib/jenkins/workspace/exam-loktev/code/hosts"
+      sh "echo 13.80.138.171 > /var/lib/jenkins/workspace/exam-loktev/code/hosts"
+      sh "ansible-playbook /var/lib/jenkins/workspace/exam-loktev/code/playbook.yml -u root --key-file=/key/id_rsa -i /var/lib/jenkins/workspace/dz8/code/hosts"
+      sh "echo 'echo ******************end deploying branch dev to prod2 13.80.138.171********************'"
+    }
+  }
+  
+    stage('Stage 6. Cloning branch feature') {
+      steps {
+      //cleanWs() // Clean before build
+      sh "echo '******************start cloning branch feature from ********************'"
+      sh "rm -Rf /var/lib/jenkins/workspace/exam-loktev/site"
+      sh "git clone https://gitlab.com/staskuznetsov/site.git /var/lib/jenkins/workspace/exam-loktev/site -b feature"
+      sh "echo 'echo ******************end cloning branch feature ********************'"
+    }
+  }
+    stage('Stage 7. deploying branch dev to prod3 20.107.209.6') {
+      steps {
+      //cleanWs() // Clean before build
+      sh "echo '****************** start deploying branch dev to jen3 20.100.193.178 ********************'"
+      sh "touch /var/lib/jenkins/workspace/exam-loktev/code/hosts"
+      sh "echo 20.107.209.6 > /var/lib/jenkins/workspace/exam-loktev/code/hosts"
+      sh "ansible-playbook /var/lib/jenkins/workspace/exam-loktev/code/playbook.yml -u root --key-file=/key/id_rsa -i /var/lib/jenkins/workspace/dz8/code/hosts"
+      sh "echo 'echo ****************** end deploying branch dev to prod3 20.107.209.6 ********************'"
+    }
+  } 
+  
+  
+}
+
+
+
+}
