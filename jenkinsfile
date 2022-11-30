@@ -22,6 +22,8 @@ pipeline {
       steps {
       //cleanWs() // Clean before build
       sh "echo '******************start cloning branch main from git********************'"
+      sh "rm -Rf /var/lib/jenkins/workspace/exam-loktev/site"
+      sh "mkdir /var/lib/jenkins/workspace/exam-loktev/site"      
       sh "git clone https://gitlab.com/staskuznetsov/site.git /var/lib/jenkins/workspace/exam-loktev/site -b main"
       sh "echo 'echo ******************end cloning branch main from git********************'"
     }
@@ -42,6 +44,7 @@ pipeline {
       //cleanWs() // Clean before build
       sh "echo '******************start cloning branch dev from git********************'"
       sh "rm -Rf /var/lib/jenkins/workspace/exam-loktev/site"
+      sh "mkdir /var/lib/jenkins/workspace/exam-loktev/site"
       sh "git clone https://gitlab.com/staskuznetsov/site.git /var/lib/jenkins/workspace/exam-loktev/site -b dev"
       sh "echo 'echo ******************end cloning branch dev from git********************'"
     }
@@ -63,6 +66,7 @@ pipeline {
       //cleanWs() // Clean before build
       sh "echo '******************start cloning branch feature from ********************'"
       sh "rm -Rf /var/lib/jenkins/workspace/exam-loktev/site"
+      sh "mkdir /var/lib/jenkins/workspace/exam-loktev/site"
       sh "git clone https://gitlab.com/staskuznetsov/site.git /var/lib/jenkins/workspace/exam-loktev/site -b feature"
       sh "echo 'echo ******************end cloning branch feature ********************'"
     }
